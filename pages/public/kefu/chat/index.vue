@@ -655,7 +655,7 @@ export default {
 
 		// 发送消息
 		onSend() {
-			if (!this.msgText) {
+			if (this.msgText) {
 				this.sendWs(this.msgText);
 				this.pushChat(this.msgText);
 				this.msgText = '';
