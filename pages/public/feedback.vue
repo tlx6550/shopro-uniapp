@@ -47,7 +47,7 @@
 			</view>
 			<view class="foot_box x-bc pad">
 				<button class="cu-btn post-btn" @tap="addFeedback">提交</button>
-				<button class="cu-btn contact-btn" v-if="addons.includes('kefu')" @tap="onService">联系客服</button>
+				<button class="cu-btn contact-btn" @tap="onService">联系客服</button>
 			</view>
 		</view>
 	</form>

@@ -52,7 +52,7 @@
 			</view>
 		</view>
 		<view class="foot_box x-bc">
-			<button class="cu-btn contcat-btn" v-if="addons.includes('kefu')" @tap="onService">联系客服</button>
+			<button class="cu-btn contcat-btn" @tap="onService">联系客服</button>
 			<button class="cu-btn sub-btn" @tap="postAftersale">提交</button>
 		</view>
 		<shopro-modal v-model="showModal" :modalType="'bottom-modal'">

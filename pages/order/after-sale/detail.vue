@@ -73,7 +73,7 @@
 				<button v-if="orderBtn === 'cancel'" @tap.stop="onCancel(aftersaleDetail.id)" class="cu-btn btn">取消</button>
 				<button v-if="orderBtn === 'delete'" style="background:#FFEEEE;color:#E50808" @tap.stop="onDelete(aftersaleDetail.id)" class="cu-btn btn">删除</button>
 			</block>
-			<button class="cu-btn contcat-btn btn" v-if="addons.includes('kefu')" @tap="onService">联系客服</button>
+			<button class="cu-btn contcat-btn btn"  @tap="onService">联系客服</button>
 		</view>
 	</view>
 </template>
