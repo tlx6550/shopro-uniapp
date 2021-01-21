@@ -59,7 +59,7 @@
 				</u-form-item>
 				<view class="agreement x-f">
 					<u-checkbox v-model="model.agreement" activeColor="#4CB89D" shape="circle" @change="onAgreement"></u-checkbox>
-					<view class="agreement-text" @tap="jump('/pages/public/richtext', { id: protocolId })">勾选代表同意《门店入驻协议》</view>
+					<view class="agreement-text" @tap="toProtocol">勾选代表同意《门店入驻协议》</view>
 				</view>
 				<view class="x-c">
 					<button class="cu-btn save-btn" @tap="onSubmit" :disabled="isFormEnd">
@@ -411,10 +411,13 @@ export default {
 			that.$api('store.shopInfo').then(res => {
 				if (res.code === 1) {
 					res.data.apply && this.authStatus(res.data.apply);
-					// WX-warning-TODO - protocol为null
-					this.protocolId = res.data.config.protocol;
+					this.protocolId = res.data?.config?.protocol;
 				}
 			});
+		},
+		// 跳转门店协议
+		toProtocol() {
+			this.protocolId && this.jump('/pages/public/richtext', { id: this.protocolId });
 		},
 
 		// 初始化model

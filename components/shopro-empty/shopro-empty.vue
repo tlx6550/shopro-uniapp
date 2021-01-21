@@ -24,11 +24,9 @@ export default {
 	},
 	props: {
 		emptyData: {
-			// WX-warning-TODO - 数据为null
-			// img:空白页图片
-			// tip:空白页提示语
-			// path:空白页跳转路径
-			// pathText:跳转按钮文本。
+			// img:空白页图片, tip:空白页提示语 ,path:空白页跳转路径, pathText:跳转按钮文本。
+			type: Object,
+			default: {}
 		},
 		isFixed: {
 			//是否开启绝对定位。

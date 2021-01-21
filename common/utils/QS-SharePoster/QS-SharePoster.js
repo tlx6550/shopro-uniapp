@@ -11,14 +11,13 @@ isMp = true;
 // #endif
 
 var nbgScale = 1;
-// export default 
+
 function getSharePoster(obj) {
 	return new Promise(async (resolve, reject) => {
 		try {
 			const result1 = await returnPromise(obj);
 			resolve(result1);
 		} catch (e) {
-			//TODO handle the exception
 			try {
 				if (obj.bgScale) {
 					obj.bgScale = Number(obj.bgScale) - 0.1
@@ -29,7 +28,6 @@ function getSharePoster(obj) {
 				const result2 = await returnPromise(obj);
 				resolve(result2);
 			} catch (e) {
-				//TODO handle the exception
 				reject(e);
 			}
 		}
@@ -234,7 +232,6 @@ function returnPromise(obj) {
 				type
 			});
 		} catch (e) {
-			//TODO handle the exception
 			rj(e);
 		}
 	});
@@ -426,7 +423,6 @@ function drawShareImage(obj) { //绘制海报方法
 				Context.draw((typeof(reserve) == 'boolean' ? reserve : false), fn);
 			}, drawDelayTime);
 		} catch (e) {
-			//TODO handle the exception
 			_app.hideLoading();
 			rj(e);
 		}
@@ -571,7 +567,6 @@ function countTextLength(Context, obj) {
 	try {
 		textLength = Context.measureText(text); // 官方文档说 App端自定义组件编译模式暂时不可用measureText方法
 	} catch (e) {
-		//TODO handle the exception
 		textLength = {};
 	}
 	textLength = {};
@@ -791,7 +786,6 @@ function setImage(images) { // 设置图片数据
 			}
 			resolve(images);
 		} catch (e) {
-			//TODO handle the exception
 			rejcet(e);
 		}
 	})
@@ -1321,7 +1315,6 @@ function getShreUserPosterBackgroundFc(objs, upimage) { //下载并保存背景�
 				reject('not find savedFilePath');
 			}
 		} catch (e) {
-			//TODO handle the exception
 			reject(e);
 		}
 	});

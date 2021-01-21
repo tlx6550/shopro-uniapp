@@ -46,7 +46,7 @@
 					</view>
 				</view>
 			</view>
-			<!-- 筛选 TODO -->
+			<!-- 筛选 -->
 			<view class="filter-box x-f" v-if="false">
 				<view class="filter-item flex-sub" v-for="(filter, index) in filterList" :key="index" @tap="onFilter(index)">
 					<view class="x-f">
