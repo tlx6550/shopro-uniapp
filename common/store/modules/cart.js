@@ -20,7 +20,7 @@ const actions = {
 		return new Promise((resolve, reject) => {
 			http('cart.index').then(res => {
 				let cartData = res.data;
-				cartData.map(item => {
+				cartData.length && cartData.map(item => {
 					item.checked = true;
 				})
 				uni.setStorageSync('cartNum', cartData.length);

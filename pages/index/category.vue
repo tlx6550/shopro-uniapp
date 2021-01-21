@@ -10,7 +10,7 @@
 		<!--直接购买，点餐 -->
 		<sh-takeout-catgory :categoryId="categoryId" v-if="categoryType === 1"></sh-takeout-catgory>
 		<!-- 自定义底部导航 -->
-		<shopro-tabbar v-if="queryObj.id" :queryObj="queryObj"></shopro-tabbar>
+		<shopro-tabbar :queryObj="queryObj"></shopro-tabbar>
 		<!-- 关注弹窗 -->
 		<shopro-float-btn></shopro-float-btn>
 		<!-- 连续弹窗提醒 -->

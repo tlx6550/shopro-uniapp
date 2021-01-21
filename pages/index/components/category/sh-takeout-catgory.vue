@@ -2,7 +2,7 @@
 	<view class="catgory-wrap">
 		<view class="x-f wrapper-box" :style="paddingBottom">
 			<!-- 左侧分类列表 -->
-			<view class="scroll-box" style="background-color: #F6F6F6;">
+			<view class="scroll-box">
 				<scroll-view class="left left-scroll-box flex-sub" :scroll-top="scrollLeftTop" enable-back-to-top scroll-y scroll-with-animation>
 					<view
 						class="type-list x-c"
@@ -27,8 +27,11 @@
 								<text class="type-title">{{ item.name }}</text>
 							</view>
 							<view class="item-box">
-								<view class="goods-item x-f mb30" v-for="(mlist, index2) in item.goods" :key="index2">
-									<view class="item-img"><image class="item-img" lazy-load :src="mlist.image" mode="aspectFill"></image></view>
+								<view class="goods-item x-f mb30" v-for="(mlist, index2) in item.goods" :key="index2" @tap="toGoodDetail(mlist.id)">
+									<view class="item-img item-img-wrap">
+										<image class="tag-img" :src="tag[mlist.activity_type]" mode=""></image>
+										<image class="item-img" lazy-load :src="mlist.image" mode="aspectFill"></image>
+									</view>
 									<view class="goods-item--right">
 										<view class="item-right--title one-t">{{ mlist.title }}</view>
 										<view class="item-right--sales">销量{{ mlist.sales }}份</view>
@@ -43,19 +46,24 @@
 													{{ mlist.original_price }}
 												</view>
 											</view>
-											<button class="cu-btn item-btn add-cart" v-if="!mlist.is_sku">
-												<text class="cuIcon-roundaddfill" v-if="!isCart(mlist.id)" @tap="addCart(mlist.sku_price[0])"></text>
-												<view class="num-step" v-else>
-													<uni-number-box
-														@change="onChangeNum($event, mlist.sku_price[0], index1)"
-														:value="checkCart[mlist.id].num"
-														:step="1"
-														:min="0"
-														:disabled="numberDisabled"
-													></uni-number-box>
-												</view>
-											</button>
-											<button class="cu-btn item-btn sel-sku" @tap.stop="selSku(mlist)" v-else>选规格</button>
+											<view class="" v-if="!mlist.activity">
+												<button class="cu-btn item-btn add-cart" v-if="!mlist.is_sku">
+													<button class="cu-btn cart-btn" v-if="!isCart(mlist.id)" @tap.stop="addCart(mlist.sku_price[0])">
+														<text class="cuIcon-cartfill"></text>
+													</button>
+													<view class="num-step" v-else>
+														<uni-number-box
+															@change="onChangeNum($event, mlist.sku_price[0], index1)"
+															:value="checkCart[mlist.id].num"
+															:step="1"
+															:min="0"
+															:disabled="numberDisabled"
+														></uni-number-box>
+													</view>
+												</button>
+												<button class="cu-btn item-btn sel-sku" @tap.stop="selSku(mlist)" v-else>选规格</button>
+											</view>
+											<button v-else class="cu-btn item-btn sel-sku" @tap.stop="toGoodDetail(mlist.id)">去购买</button>
 										</view>
 									</view>
 								</view>
@@ -148,7 +156,12 @@ export default {
 			showSku: true, //是否显示规格弹窗
 			goodsInfo: {}, //点击商品详情
 			showCartList: false,
-			numberDisabled: false //购物车计数器
+			numberDisabled: false, //购物车计数器
+			tag: {
+				//标签
+				groupon: this.$IMG_URL + '/imgs/groupon_tag.png',
+				seckill: this.$IMG_URL + '/imgs/seckill_tag.png'
+			}
 		};
 	},
 	props: {
@@ -216,6 +229,10 @@ export default {
 	methods: {
 		...mapActions(['getCartList', 'changeCartList', 'addCartGoods', 'getAllSellectCartList']),
 		...mapMutations(['changeAllSellect']),
+		// 跳转详情
+		toGoodDetail(id) {
+			this.$Router.push({ path: '/pages/goods/detail/index', query: { id: id } });
+		},
 		// 显示购物车列表
 		onShowCartList() {
 			if (!this.takeoutTotalCount.totalNum) return;
@@ -655,6 +672,7 @@ export default {
 	width: 200upx;
 	height: 100%;
 	flex: 1;
+	background-color: #f6f6f6;
 
 	.list-active {
 		background: #fff;
@@ -728,7 +746,18 @@ export default {
 				.item-right--bottom {
 					width: 100%;
 				}
-
+				.item-img-wrap {
+					position: relative;
+					.tag-img {
+						position: absolute;
+						position: absolute;
+						left: 0;
+						top: 0;
+						z-index: 2;
+						width: 80rpx;
+						height: 40rpx;
+					}
+				}
 				.item-img {
 					width: 140rpx;
 					height: 140rpx;
@@ -777,16 +806,23 @@ export default {
 					right: 0rpx;
 					padding: 0;
 
-					.cuIcon-roundaddfill {
-						color: #e6b873;
-						font-size: 40rpx;
+					.cart-btn {
+						width: 54rpx;
+						height: 54rpx;
+						border-radius: 50%;
+						padding: 0;
+						background: #e6b873;
+						.cuIcon-cartfill {
+							color: #fff;
+							font-size: 32rpx;
+						}
 					}
 				}
 
 				.sel-sku {
 					width: 100rpx;
 					height: 40rpx;
-					background: rgba(230, 184, 115, 1);
+					background: #e6b873;
 					border-radius: 20rpx;
 					font-size: 22rpx;
 					font-family: PingFang SC;
