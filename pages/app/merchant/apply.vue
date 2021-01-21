@@ -411,6 +411,7 @@ export default {
 			that.$api('store.shopInfo').then(res => {
 				if (res.code === 1) {
 					res.data.apply && this.authStatus(res.data.apply);
+					// WX-warning-TODO - protocol为null
 					this.protocolId = res.data.config.protocol;
 				}
 			});

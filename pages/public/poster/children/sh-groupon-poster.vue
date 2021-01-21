@@ -91,18 +91,10 @@ export default {
 				const d = await getSharePoster({
 					_this: this, //若在组件中使用 必传
 					type: 'grouponPoster',
-					backgroundImage: that.$tools.checkImgHttp(that.shareData.groupon_poster_bg), //接口返回的背景图
-					formData: {
-						//访问接口获取背景图携带自定义数据
-					},
+					backgroundImage: that.$tools.checkImgHttp(that.shareData.groupon_poster_bg, 'bgImage'), //接口返回的背景图
 					posterCanvasId: this.canvasId, //canvasId
 					delayTimeScale: 20, //延时系数
 					drawDelayTime: 500, //draw延时时间
-					/* background: {
-							width: 1080,
-							height: 1920,
-							backgroundColor: '#666'
-						}, */
 					drawArray: ({ bgObj, type, bgScale }) => {
 						const dx = bgObj.width * 0.3;
 						const fontSize = bgObj.width * 0.042;
@@ -110,18 +102,9 @@ export default {
 						//可直接return数组，也可以return一个promise对象, 但最终resolve一个数组, 这样就可以方便实现后台可控绘制海报
 						return new Promise((rs, rj) => {
 							rs([
-								// {
-								// 	type: 'custom',
-								// 	setDraw(Context) {
-								// 		Context.setFillStyle('black');
-								// 		Context.setGlobalAlpha(1);
-								// 		Context.fillRect(0, bgObj.height - bgObj.height * 0.2, bgObj.width, bgObj.height * 0.2);
-								// 		Context.setGlobalAlpha(1);
-								// 	}
-								// },
 								{
 									type: 'image', //头像
-									url: that.$tools.checkImgHttp(that.userInfo.avatar),
+									url: that.$tools.checkImgHttp(that.userInfo.avatar, 'avatar'),
 									alpha: 1,
 									dy: bgObj.width * 0.06,
 									infoCallBack(imageInfo) {
@@ -135,21 +118,15 @@ export default {
 											dx: bgObj.width * 0.1 - imageInfo.width * 0.5 * scale,
 											dWidth: imageInfo.width * scale, // 因为设置了圆形图片 所以要乘以2
 											dHeight: bgObj.width * 0.1
-											/* roundRectSet: { // 圆角矩形
-													r: imageInfo.width * .1
-												} */
 										};
 									}
 								},
 								{
 									type: 'text', //昵称
-									// fontStyle: 'italic',//倾斜
 									text: that.userInfo.nickname,
 									size: fontSize,
 									color: '#fff',
 									alpha: 1,
-									// textAlign: 'middle',
-									// textBaseline: 'middle',
 									infoCallBack(textLength) {
 										_app.log('index页面的text的infocallback ，textlength:' + textLength);
 										return {
@@ -162,13 +139,10 @@ export default {
 								},
 								{
 									type: 'text', //昵称
-									// fontStyle: 'italic',//倾斜
 									text: '发现一个好物，快来和我一起拼吧！',
 									size: fontSize * 0.9,
 									color: '#fff',
 									alpha: 1,
-									// textAlign: 'middle',
-									// textBaseline: 'middle',
 									infoCallBack(textLength) {
 										_app.log('index页面的text的infocallback ，textlength:' + textLength);
 										return {
@@ -181,7 +155,7 @@ export default {
 								},
 								{
 									type: 'image', //商品图片
-									url: that.$tools.checkImgHttp(that.goodsInfo.image),
+									url: that.$tools.checkImgHttp(that.goodsInfo.image, 'goodsImage'),
 									alpha: 1,
 									drawDelayTime: 800, //draw延时时间
 									dx: bgObj.width * 0.054,
@@ -190,24 +164,18 @@ export default {
 										return {
 											dWidth: bgObj.width * 0.9,
 											dHeight: bgObj.width * 0.9
-											// roundRectSet: { // 圆角矩形
-											// 	r: bgObj.width * 0.025
-											// }
 										};
 									}
 								},
 								{
 									type: 'text', //标题
-									// fontStyle: 'italic',//倾斜
 									text: that.goodsInfo.title,
 									size: fontSize * 0.9,
 									color: 'black',
 									alpha: 1,
 									textAlign: 'left',
 									textBaseline: 'middle',
-									// fontWeight: 'bold',
 									lineFeed: {
-										//换行
 										maxWidth: bgObj.width * 0.91,
 										lineHeight: bgObj.width * 0.06,
 										lineNum: 2,
@@ -224,14 +192,12 @@ export default {
 								},
 								{
 									type: 'text', //价格
-									// fontStyle: 'italic',//倾斜
 									text: '拼团价：￥',
 									size: fontSize * 0.8,
 									color: '#E1212B',
 									alpha: 1,
 									textAlign: 'left',
 									textBaseline: 'middle',
-									// fontWeight: 'bold',
 									infoCallBack(textLength) {
 										_app.log('index页面的text的infocallback ，textlength:' + textLength);
 										return {
@@ -243,7 +209,6 @@ export default {
 								},
 								{
 									type: 'text', //价格
-									// fontStyle: 'italic',//倾斜
 									text: `${that.goodsInfo.price}`,
 									size: fontSize * 1.1,
 									color: '#E1212B',
@@ -251,9 +216,6 @@ export default {
 									textAlign: 'left',
 									textBaseline: 'middle',
 									fontWeight: 'bold',
-									// lineThrough: {
-									// 	style: '#999999'
-									// },
 									infoCallBack(textLength) {
 										_app.log('index页面的text的infocallback ，textlength:' + textLength);
 										return {
@@ -265,17 +227,11 @@ export default {
 								},
 								{
 									type: 'text', //几人团
-									// fontStyle: 'italic',//倾斜
 									text: `${that.goodsInfo.teamNum}人团`,
 									size: fontSize * 0.8,
 									color: '#fff',
 									alpha: 1,
 									textAlign: 'right',
-									// textBaseline: 'middle',
-									// fontWeight: 'bold',
-									// lineThrough: {
-									// 	style: '#999999'
-									// },
 									infoCallBack(textLength) {
 										_app.log('index页面的text的infocallback ，textlength:' + textLength);
 										return {
@@ -288,7 +244,7 @@ export default {
 								// #ifdef MP-WEIXIN
 								{
 									type: 'image', //微信小程序码
-									url: `${that.$API_URL}wechat/wxacode?scene=${that.scene}`,
+									url: that.$tools.checkImgHttp(`${that.$API_URL}wechat/wxacode?scene=${that.scene}`, 'wxCode'),
 									alpha: 1,
 									drawDelayTime: 500, //draw延时时间
 									dx: bgObj.width - bgObj.width * 0.2,
@@ -297,9 +253,6 @@ export default {
 										return {
 											dWidth: bgObj.width * 0.14,
 											dHeight: bgObj.width * 0.14
-											// roundRectSet: { // 圆角矩形
-											// 	r: imageInfo.width * 0.025
-											// }
 										};
 									}
 								},
@@ -321,13 +274,10 @@ export default {
 						this.poster = bgObj;
 					}
 				});
-				// console.log('海报生成成功, 时间:' + new Date() + '， 临时路径: ' + d.poster.tempFilePath);
-				// this.poster.finalPath = d.poster.tempFilePath;
 				this.$set(this.poster, 'finalPath', d.poster.tempFilePath);
 			} catch (e) {
 				_app.hideLoading();
 				_app.showToast(JSON.stringify(e));
-				// console.log(JSON.stringify(e));
 			}
 		},
 		// 保存图片

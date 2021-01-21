@@ -37,6 +37,7 @@ export default {
 			}).then(res => {
 				this.richText = res.data;
 				uni.setNavigationBarTitle({
+						// WX-warning-TODO - title为null
 					title: res.data.title
 				});
 			});

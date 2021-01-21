@@ -110,7 +110,7 @@ export default class Socket {
 		// 监听打开
 		uni.onSocketOpen(res => {
 			uni.setStorageSync('isSocketOpen', true)
-			console.log('连接接成功！');
+			console.log('连接成功！');
 			this.lockReconnect = true;
 			this.isClose = false;
 			this.start()

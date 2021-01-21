@@ -40,7 +40,10 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to, from) => {
 	// #ifdef H5
 	if (uni.getStorageSync('platform') === 'wxOfficialAccount' && uni.getSystemInfoSync().platform === 'ios' && !window.entryURL) {
-		//IOS sdk 校验
+		/**
+		 * 微信h5,ios端sdk检验兼容。
+		 * 域名进入注意加'/'
+		 */
 		if (from.path === '/pages/index/index') {
 			window.entryURL = '/'
 		} else {

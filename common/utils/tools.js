@@ -62,18 +62,71 @@ export default {
 	 * param(imgPath): 图片地址。
 	 */
 
-	checkImgHttp(imgPath) {
+	async checkImgHttp(imgPath, type) {
+		let res = await this.getImageInfo_PromiseFc(imgPath)
 		let newPath = '';
-		let pathArr = imgPath.split('://');
-		// #ifdef H5
-		let ishttps = 'https:' == window.location.protocol ? true : false;
-		ishttps ? (pathArr[0] = 'https') : (pathArr[0] = 'http');
-		// #endif
-		// #ifdef MP-WEIXIN
-		pathArr[0] = 'https'
-		// #endif
-		newPath = pathArr.join('://');
+		if (!res) {
+			switch (type) {
+				case 'avatar':
+					console.log('%cerr:海报头像图片错误', 'color:green;background:yellow');
+					break;
+				case 'bgImage':
+					console.log('%cerr:海报背景图片错误', 'color:green;background:yellow');
+					break;
+				case 'wxCode':
+					console.log('%cerr:海报微信二维码图片错误', 'color:green;background:yellow');
+					break;
+				case 'goodsImage':
+					console.log('%cerr:海报商品图片错误', 'color:green;background:yellow');
+					break;
+				default:
+					break;
+			}
+		} else {
+			let pathArr = imgPath.split('://');
+			// #ifdef H5
+			let ishttps = 'https:' == window.location.protocol ? true : false;
+			ishttps ? (pathArr[0] = 'https') : (pathArr[0] = 'http');
+			// #endif
+			// #ifdef MP-WEIXIN
+			pathArr[0] = 'https'
+			// #endif
+			newPath = pathArr.join('://');
+		}
+
 		return newPath;
+	},
+	// 检测图片是否可用
+	getImageInfo_PromiseFc(imgPath) {
+		return new Promise((rs, rj) => {
+			imgPath = this.checkMPUrl(imgPath);
+			uni.getImageInfo({
+				src: imgPath,
+				success: res => {
+					rs(1);
+				},
+				fail: err => {
+					rs(0);
+				}
+			})
+		});
+	},
+	// 微信头像
+	checkMPUrl(url) {
+		// #ifdef MP
+		if (process.env.NODE_ENV !== 'development') {
+			if (
+				url.substring(0, 4) === 'http' &&
+				url.substring(0, 5) !== 'https' &&
+				url.substring(0, 12) !== 'http://store' &&
+				url.substring(0, 10) !== 'http://tmp' &&
+				url.substring(0, 10) !== 'http://usr'
+			) {
+				url = 'https' + url.substring(4, url.length);
+			}
+		}
+		// #endif
+		return url;
 	},
 	// 打电话
 	callPhone(phoneNumber = '') {

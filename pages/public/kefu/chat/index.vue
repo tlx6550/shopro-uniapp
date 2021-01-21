@@ -387,6 +387,10 @@ export default {
 		// 解析链接状态
 		parseMsgStatus(msgStr) {
 			let obj = JSON.parse(msgStr);
+			let chatName = '客服';
+			if (obj.data.customer_service) {
+				chatName = obj.data.customer_service.name ? `客服-${obj.data.customer_service.name}` : '客服';
+			}
 			if (obj.code === 1) {
 				switch (obj.type) {
 					case 'init':
@@ -400,17 +404,17 @@ export default {
 						this.pushChat(obj.data.message.message, 'system');
 						break;
 					case 'access':
-						this.navTitle = `客服-${obj.data.customer_service.name},在线`;
+						this.navTitle = `${chatName},在线`;
 						this.pushChat(obj.data.message.message, 'system');
 						break;
 					case 'customer_service_online':
-						this.navTitle = `客服-${obj.data.customer_service.name},在线`;
+						this.navTitle = `${chatName},在线`;
 						break;
 					case 'customer_service_offline':
-						this.navTitle = `客服-${obj.data.customer_service.name},离线`;
+						this.navTitle = `${chatName},离线`;
 						break;
 					case 'message':
-						this.navTitle = `客服-${obj.data.customer_service.name},在线`;
+						this.navTitle = `${chatName},在线`;
 						this.chatList.push(this.parseMsg(obj.data.message, obj.data.message.identify));
 						this.goBottom();
 						break;

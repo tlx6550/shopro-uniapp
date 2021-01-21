@@ -74,47 +74,27 @@ export default {
 				that.$emit('getShareInfo', that.shareInfo);
 				that.scene = encodeURIComponent(that.shareInfo.path.split('?')[1]);
 				that.shareFc();
-			}, 100);
+			}, 500);
 		}
 	},
 	methods: {
 		async shareFc() {
 			let that = this;
 			try {
-				// console.log('准备生成:' + new Date());
 				const d = await getSharePoster({
 					_this: this, //若在组件中使用 必传
-					// type: 'invitePoster',
-					backgroundImage: that.$tools.checkImgHttp(that.shareData.user_poster_bg), //接口返回的背景图
-					formData: {
-						//访问接口获取背景图携带自定义数据
-					},
+					backgroundImage: that.$tools.checkImgHttp(that.shareData.user_poster_bg, 'bgImage'), //接口返回的背景图
 					posterCanvasId: this.canvasId, //canvasId
 					delayTimeScale: 20, //延时系数
-					/* background: {
-							width: 1080,
-							height: 1920,
-							backgroundColor: '#666'
-						}, */
 					drawArray: ({ bgObj, type, bgScale }) => {
 						const dx = bgObj.width * 0.3;
 						const fontSize = bgObj.width * 0.042;
 						const lineHeight = bgObj.height * 0.04;
-						//可直接return数组，也可以return一个promise对象, 但最终resolve一个数组, 这样就可以方便实现后台可控绘制海报
 						return new Promise((rs, rj) => {
 							rs([
-								// {
-								// 	type: 'custom',
-								// 	setDraw(Context) {
-								// 		Context.setFillStyle('black');
-								// 		Context.setGlobalAlpha(1);
-								// 		Context.fillRect(0, bgObj.height - bgObj.height * 0.2, bgObj.width, bgObj.height * 0.2);
-								// 		Context.setGlobalAlpha(1);
-								// 	}
-								// },
 								{
 									type: 'image', //头像
-									url: that.$tools.checkImgHttp(that.userInfo.avatar),
+									url: that.$tools.checkImgHttp(that.userInfo.avatar, 'avatar'),
 									alpha: 1,
 									dy: bgObj.width * 0.16,
 									infoCallBack(imageInfo) {
@@ -128,16 +108,11 @@ export default {
 											dWidth: imageInfo.width * scale, // 因为设置了圆形图片 所以要乘以2
 											dHeight: bgObj.width * 0.16,
 											dx: bgObj.width * 0.5 - imageInfo.width * 0.5 * scale
-
-											/* roundRectSet: { // 圆角矩形
-													r: imageInfo.width * .1
-												} */
 										};
 									}
 								},
 								{
 									type: 'text', //昵称
-									// fontStyle: 'italic',//倾斜
 									text: that.userInfo.nickname,
 									size: fontSize,
 									color: 'black',
@@ -157,7 +132,7 @@ export default {
 								// #ifdef MP-WEIXIN
 								{
 									type: 'image', //微信小程序码
-									url: `${that.$API_URL}wechat/wxacode?scene=${that.scene}`,
+									url: that.$tools.checkImgHttp(`${that.$API_URL}wechat/wxacode?scene=${that.scene}`, 'wxCode'),
 									alpha: 1,
 									drawDelayTime: 500, //draw延时时间
 									dx: bgObj.width * 0.5 - (bgObj.width * 0.26) / 2,
@@ -166,9 +141,6 @@ export default {
 										return {
 											dWidth: bgObj.width * 0.26,
 											dHeight: bgObj.width * 0.26
-											// roundRectSet: { // 圆角矩形
-											// 	r: imageInfo.width * 0.025
-											// }
 										};
 									}
 								},
@@ -190,8 +162,6 @@ export default {
 						this.poster = bgObj;
 					}
 				});
-				// console.log('海报生成成功, 时间:' + new Date() + '， 临时路径: ' + d.poster.tempFilePath);
-				// this.poster.finalPath = d.poster.tempFilePath;
 				this.$set(this.poster, 'finalPath', d.poster.tempFilePath);
 				this.qrShow = true;
 			} catch (e) {
