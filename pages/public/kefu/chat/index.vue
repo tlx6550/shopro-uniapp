@@ -153,9 +153,9 @@
 					:interval="3000"
 					:duration="1000"
 				>
-					<swiper-item v-for="(memoji, index) in newEmojiList">
+					<swiper-item v-for="(memoji, index) in newEmojiList" :key="index">
 						<view class="swiper-item x-f">
-							<view class="emoji-img" v-for="(memo, mindex) in memoji" @tap="onEmoji(memo)">
+							<view class="emoji-img" v-for="(memo, mindex) in memoji" :key="memo.file" @tap="onEmoji(memo)">
 								<image class="emoji-img" :src="`${EMOJI_BASE_URL}/assets/addons/shopro/img/emoji/${memo.file}`" mode=""></image>
 							</view>
 						</view>
@@ -388,7 +388,7 @@ export default {
 		parseMsgStatus(msgStr) {
 			let obj = JSON.parse(msgStr);
 			let chatName = '客服';
-			if (obj.data.customer_service) {
+			if (obj.data?.customer_service) {
 				chatName = obj.data.customer_service.name ? `客服-${obj.data.customer_service.name}` : '客服';
 			}
 			if (obj.code === 1) {
