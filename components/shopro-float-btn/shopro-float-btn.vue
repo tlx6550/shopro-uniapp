@@ -88,6 +88,48 @@ export default {
 				this.showModal = true;
 			}
 		},
+		// 微信权限判断
+		getSetting: function() {
+			return new Promise((resolve, reject) => {
+				uni.getSetting({
+					success: res => {
+						if (res.authSetting['scope.writePhotosAlbum'] === undefined) {
+							resolve(0);
+							return;
+						}
+						if (res.authSetting['scope.writePhotosAlbum']) {
+							resolve(1);
+						} else {
+							resolve(2);
+						}
+					}
+				});
+			});
+		},
+		// 微信打开权限设置
+		openSetting: function() {
+			uni.openSetting({
+				success: res => {
+					console.log(res);
+				},
+				fail: err => {
+					console.log(err);
+					this.$tools.toast('请开启相册权限');
+				}
+			});
+		},
+		saveImageToPhotosAlbum(path) {
+			uni.saveImageToPhotosAlbum({
+				filePath: path,
+				success: res => {
+					this.$tools.toast('保存成功');
+				},
+				fail: err => {
+					console.log(`图片保存失败:`, err);
+					this.$tools.toast('保存失败');
+				}
+			});
+		},
 		// 保存图片
 		async saveImage(path) {
 			let that = this;
@@ -96,15 +138,28 @@ export default {
 			if (platform === 'wxOfficialAccount') {
 				that.$tools.toast('长按图片保存');
 			} else if (checkPermission) {
-				uni.saveImageToPhotosAlbum({
-					filePath: path,
-					success: res => {
-						that.$tools.toast('保存成功');
-					},
-					fail: err => {
-						that.$tools.toast('保存失败');
-					}
+				// #ifdef MP-WEIXIN || MP-TOUTIAO || MP-QQ
+				await uni.authorize({
+					scope: 'scope.writePhotosAlbum'
 				});
+
+				let status = await this.getSetting();
+				if (status === 1) {
+					const res = await uni.downloadFile({
+						url: path
+					});
+					if (res[1].statusCode === 200) {
+						await this.saveImageToPhotosAlbum(res[1].tempFilePath);
+					}
+					return;
+				} else {
+					if (status === 2) {
+						that.openSetting();
+						return;
+					}
+				}
+				// #endif
+				this.saveImageToPhotosAlbum(path);
 			}
 		},
 		onBtn() {
