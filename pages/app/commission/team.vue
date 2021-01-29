@@ -192,8 +192,8 @@ export default {
 			that.$api('commission.team', {
 				page: that.currentPage
 			}).then(res => {
+				that.isLoading = false;
 				if (res.code === 1) {
-					that.isLoading = false;
 					this.referrerInfo = res.data.parent_user;
 					let arr = res.data.teams.data;
 					arr.map(item => {

@@ -2,7 +2,7 @@
 <template>
 	<view class="container">
 		<!-- 背景图 -->
-		<view class="x-c"><image class="logo-bg"  :src="$IMG_URL + '/imgs/logo_bg.png'" mode=""></image></view>
+		<view class="x-c"><image class="logo-bg" :src="$IMG_URL + '/imgs/logo_bg.png'" mode=""></image></view>
 		<!-- titleview -->
 		<view class="head-box"><cu-custom :isBack="true"></cu-custom></view>
 		<view class="wrapper">
@@ -114,8 +114,8 @@ export default {
 					code: this.code.value,
 					password: this.password
 				}).then(res => {
+					this.isLoading = false;
 					if (res.code === 1) {
-						this.isLoading = false;
 						uni.showToast({
 							title: res.msg || '注册成功,请前往登录',
 							icon: 'success',

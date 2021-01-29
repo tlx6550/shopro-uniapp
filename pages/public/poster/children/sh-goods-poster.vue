@@ -94,8 +94,8 @@ export default {
 				that.$api('goods.detail', {
 					id: that.$Route.query.id
 				}).then(res => {
+					uni.hideLoading();
 					if (res.code === 1) {
-						uni.hideLoading();
 						that.goodsInfo = res.data;
 						resolve(that.goodsInfo);
 					}

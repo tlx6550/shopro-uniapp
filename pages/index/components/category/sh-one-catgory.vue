@@ -104,8 +104,8 @@ export default {
 			let that = this;
 			that.isLoading = true;
 			that.$api('goods.lists', that.listParams).then(res => {
+				that.isLoading = false;
 				if (res.code === 1) {
-					that.isLoading = false;
 					that.goodsList = [...that.goodsList, ...res.data.data];
 					that.lastPage = res.data.last_page;
 				}

@@ -752,8 +752,8 @@ export default {
 				type: 'all',
 				page: that.orderCurrentPage
 			}).then(res => {
+				that.isLoading = false;
 				if (res.code === 1) {
-					that.isLoading = false;
 					that.orderList = [...that.orderList, ...res.data.data];
 					that.orderTotalPage = res.data.last_page;
 					if (that.orderCurrentPage < res.data.last_page) {

@@ -136,8 +136,8 @@ export default {
 				type: that.tabCurrent,
 				page: that.currentPage
 			}).then(res => {
+				that.isLoading = false;
 				if (res.code === 1) {
-					that.isLoading = false;
 					that.goodsList = [...that.goodsList, ...res.data.data];
 					that.lastPage = res.data.last_page;
 					if (that.currentPage < res.data.last_page) {

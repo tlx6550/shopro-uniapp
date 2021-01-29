@@ -148,8 +148,8 @@ export default {
 				type: that.stateId,
 				page: that.currentPage
 			}).then(res => {
+				that.isLoading = false;
 				if (res.code === 1) {
-					that.isLoading = false;
 					uni.stopPullDownRefresh();
 					that.myGrouponList = [...that.myGrouponList, ...res.data.data];
 					that.lastPage = res.data.last_page;
