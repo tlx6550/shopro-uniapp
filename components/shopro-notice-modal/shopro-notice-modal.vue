@@ -33,7 +33,7 @@ export default {
 	props: {},
 	computed: {
 		...mapState({
-			templateData: state => state.init.templateData.popup,
+			templateData: state => state.init.templateData?.popup,
 			showLoginTip: state => state.user.showLoginTip
 		}),
 		popupData() {

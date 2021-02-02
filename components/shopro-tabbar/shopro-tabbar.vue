@@ -43,7 +43,7 @@ export default {
 	},
 	computed: {
 		...mapState({
-			templateData: state => state.init.templateData.tabbar,
+			templateData: state => state.init.templateData?.tabbar,
 			cartNum: state => state.cart.cartNum
 		}),
 		tabbarData() {

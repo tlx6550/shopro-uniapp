@@ -42,7 +42,7 @@ export default {
 	props: {},
 	computed: {
 		...mapState({
-			template: state => state.init.templateData['float-button']
+			template: state => state.init.templateData?.['float-button']
 		}),
 		floatData() {
 			if (this.template) {

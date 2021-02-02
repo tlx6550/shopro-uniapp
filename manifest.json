@@ -258,7 +258,8 @@
     "mp-alipay" : {
         "uniStatistics" : {
             "enable" : false
-        }
+        },
+        "appid" : "2021002125621770"
     },
     "uniStatistics" : {
         "enable" : false

@@ -15,6 +15,9 @@ export default {
 			return new Promise((resolve, reject) => {
 				uni.getSystemInfo({
 					success: function(e) {
+						/**
+						 * statusBarHeight:字节不支持
+						 */
 						Vue.prototype.StatusBar = e.statusBarHeight;
 						// #ifdef H5
 						Vue.prototype.CustomBar = e.statusBarHeight + 45;
@@ -43,6 +46,10 @@ export default {
 						Vue.prototype.Custom = custom;
 						Vue.prototype.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
 						// #endif
+
+						// #ifdef MP-ALIPAY
+						platform = 'alipayMiniProgram';
+						// #endif
 						uni.setStorageSync('platform', platform);
 						resolve(platform);
 					}
@@ -67,11 +74,13 @@ export default {
 	},
 	onLaunch: async function(options) {
 		let that = this;
+		// #ifdef H5
 		if (options.query.mode === 'save') {
 			//截图模式
 			uni.setStorageSync('screenShot', true);
 			uni.setStorageSync('shop_id', options.query.shop_id);
 		}
+		// #endif
 		// #ifdef MP-WEIXIN
 		if (options.scene !== 1154) {
 			var wechat = new Wechat();
