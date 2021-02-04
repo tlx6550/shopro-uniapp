@@ -57,8 +57,7 @@ export default {
 			});
 		},
 		// 自动登录
-		async autoLogin(data) {
-			let initData = data;
+		async autoLogin(initData) {
 			var wechat = new Wechat();
 			if (initData.wechat.autologin && !uni.getStorageSync('token')) {
 				// #ifdef H5

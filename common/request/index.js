@@ -21,7 +21,7 @@ export default function api(url, data = {}, showToast = true) {
 	});
 
 	request.interceptor.response((response) => { /* 请求之后拦截器 */
-		if (response.data.code === 0) { // 服务端返回的状态码不等于200，则reject()
+		if (response.data?.code === 0) { // 服务端返回的状态码不等于200，则reject()
 			if (showToast) {
 				uni.showToast({
 					title: response.data.msg || '请求出错,稍后重试',
@@ -33,7 +33,7 @@ export default function api(url, data = {}, showToast = true) {
 
 		}
 
-		if (response.data.code === 401) { // 服务端返回的状态码不等于200，则reject()
+		if (response.data?.code === 401) { // 服务端返回的状态码不等于200，则reject()
 			uni.removeStorageSync('token');
 			store.commit('LOGIN_TIP', true)
 		}

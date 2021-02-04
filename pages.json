@@ -18,7 +18,12 @@
 				"navigationBarTitleText": "",
 				"navigationBarTextStyle": "white",
 				"enablePullDownRefresh": true,
-				"navigationStyle": "custom"
+				"navigationStyle": "custom",
+				"mp-alipay": {
+					"transparentTitle": "always",
+					"titlePenetrate": "YES",
+					"allowsBounceVertical": "NO"
+				}
 			},
 			"meta": {
 				"auth": false, //需要登录

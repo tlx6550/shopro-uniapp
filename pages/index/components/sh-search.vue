@@ -1,5 +1,5 @@
 <template>
-	<view class="search x-c" :style="{ 'background-color': bgcolor }" :class="{ active: bgcolor }">
+	<view class="search x-c" :style="{ 'background-color': sBgColor }" :class="{ active: sBgColor }">
 		<view class="search-box x-c shopro-selector-rect" @tap="jump('/pages/goods/list', { keywords: detail.content })">
 			<text class="cuIcon-search"></text>
 			<text class="search-val">{{ detail.content || '搜索' }}</text>
@@ -28,7 +28,16 @@ export default {
 			default: '#FFFFFF'
 		}
 	},
-	computed: {},
+	computed: {
+		sBgColor: {
+			get() {
+				return this.value;
+			},
+			set(val) {
+				this.$emit('input', val);
+			}
+		}
+	},
 	methods: {
 		jump(path, params) {
 			this.$Router.push({

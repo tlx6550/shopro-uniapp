@@ -17,7 +17,7 @@
 				<scroll-view class="scroll-box" scroll-y scroll-with-animation enable-back-to-top>
 					<block v-if="template" v-for="(item, index) in template" :key="index">
 						<!-- 搜索 -->
-						<sh-search v-if="item.type === 'search'" :detail="item" :bgcolor="bgcolor"></sh-search>
+						<sh-search v-if="item.type === 'search' && item.content" :detail="item" v-model="bgcolor"></sh-search>
 						<!-- 轮播 -->
 						<sh-banner v-if="item.type === 'banner'" :detail="item.content" @getbgcolor="getbgcolor"></sh-banner>
 						<!-- 菜单 -->
@@ -164,7 +164,7 @@ export default {
 	},
 	computed: {
 		...mapState({
-			initData: state => state.init.initData,
+			initData: state => state.init?.initData,
 			template: state => state.init.templateData?.home,
 			hasTemplate: state => state.init.hasTemplate,
 			noNetwork: state => state.init.noNetwork,
