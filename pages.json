@@ -59,7 +59,7 @@
 			"path": "pages/index/user",
 			"name": "user",
 			"style": {
-				"navigationBarTitleText": "我的",
+				"navigationBarTitleText": "我的a",
 				"navigationStyle": "custom",
 				"enablePullDownRefresh": true
 
@@ -67,7 +67,7 @@
 			"meta": {
 				"auth": false,
 				"async": true,
-				"title": "我的",
+				"title": "我的a",
 				"group": "用户"
 			}
 		},

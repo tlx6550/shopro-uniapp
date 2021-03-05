@@ -97,6 +97,7 @@ export default class Wechat {
 		let that = this;
 		let sessionStatus = false;
 		let session_key = '';
+		const mocksession_key = 'dfsdfsdfsfw23423'
 		return new Promise((resolve, reject) => {
 			uni.checkSession({
 				success(res) {

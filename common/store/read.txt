@@ -1,0 +1,3 @@
+stroe
+各个模块分开modules
+通过引入store实例 统一调用各自模块的方法

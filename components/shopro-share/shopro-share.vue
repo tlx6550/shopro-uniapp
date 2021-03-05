@@ -5,6 +5,7 @@
 				<view class="share-box">
 					<view class="share-list-box x-f">
 						<!-- #ifdef MP-WEIXIN -->
+						<!-- https://uniapp.dcloud.io/component/button?id=button -->
 						<button class="share-item share-btn y-f" open-type="share">
 							<image class="share-img"  :src="$IMG_URL + '/imgs/share_wx.png'" mode=""></image>
 							<text class="share-title">微信好友</text>

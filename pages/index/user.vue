@@ -1,6 +1,7 @@
 <!-- 个人中心 -->
 <template>
 	<view class="wrap-box">
+		<view>adsdfsd</view>
 		<view class="user-box">
 			<block v-if="template.length" v-for="(item, index) in template" :key="index">
 				<!-- 搜索 -->
